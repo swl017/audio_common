@@ -55,6 +55,7 @@ class RosPyaudio:
     def publish(self, frames):
         # msg = AudioData()
         msg = AudioDataStringArray()
+        msg.header.stamp = rospy.Time.now()
         msg.data = frames
         self.frame_pub.publish(msg)
         
