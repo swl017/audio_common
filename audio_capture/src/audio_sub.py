@@ -4,6 +4,7 @@
 @brief  Subscribe to audio messages and save to wave files.
 @date   2022-06-01
 @author Seungwook Lee, USRG@KAIST
+@todo   Speedup audio/chx pub rate by changing where splitChannels is executed
 @todo   Minimize size of published data per channel(It's almost as large as a video stream now(>2MB/s)!)
 '''
 import rospy
