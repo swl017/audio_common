@@ -21,6 +21,7 @@ class WavAudioSub():
         self.sample_format = pyaudio.paInt16
         self.channels      = 8
         self.fs            = 44100              # Record at 44100 samples per second
+        self.coding_format = '.wav'
         self.p             = pyaudio.PyAudio()  # Create an interface to PortAudio
         self.oldest_msg_time = None
         self.ext_frames    = []
@@ -76,13 +77,13 @@ class WavAudioSub():
 
     def saveFile(self, frames):
         # Save the recorded data as a WAV file
-        wf = wave.open(self.file_name + self.save_time + '.wav', 'wb')
+        wf = wave.open(self.file_name + self.save_time + self.coding_format, 'wb')
         wf.setnchannels(self.channels)
         wf.setsampwidth(self.p.get_sample_size(self.sample_format))
         wf.setframerate(self.fs)
         wf.writeframes(b''.join(frames))
         wf.close()
-        print('saved: '+self.file_name + self.save_time + '.wav')
+        print('saved: '+self.file_name + self.save_time + self.coding_format)
 
     def splitChannels(self, sdata, channel):
         depth = self.p.get_sample_size(self.sample_format)
@@ -99,7 +100,7 @@ class WavAudioSub():
 
     def savePerChannel(self, ch_data, channel):
         # Save channel to a separate file
-        file_name = self.file_name + self.save_time + '_' + str(channel) + '.wav'
+        file_name = self.file_name + self.save_time + '_' + str(channel) + self.coding_format
         outwav = wave.open(file_name, 'w')
         outwav.setnchannels(1)
         outwav.setsampwidth(self.p.get_sample_size(self.sample_format)) # bytes per sample
