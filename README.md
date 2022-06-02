@@ -29,3 +29,6 @@ On ROS Kinetic, Melodic and Noetic, the `master` branch is recommended.
 caktin_make
 roslaunch audio_catpure audio_pubsub.launch
 ```
+
+# Reference
+Refer to [pyaudio_example.py](https://github.com/swl017/audio_common/blob/feature/wave/audio_capture/src/pyaudio_example.py) and [split_wave_example.py](https://github.com/swl017/audio_common/blob/feature/wave/audio_capture/src/split_wave_example.py) for capturing and splitting 8 channel wave audio.
