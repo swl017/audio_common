@@ -4,6 +4,8 @@
 @brief  Publish audio messages in AudioDataStringArray.
 @date   2022-06-01
 @author Seungwook Lee, USRG@KAIST
+@todo   Investigate device option like arecord -l
+@todo   Investigate how to specify the bitrate
 '''
 
 import rospy
@@ -29,7 +31,7 @@ class WavAudioPub:
         self.frame_pub = rospy.Publisher("audio/all", AudioDataStringArray, queue_size=1)
         self.info_pub  = rospy.Publisher("audio/all/info", AudioInfo, queue_size=1)
 
-        print('Node initiated')
+        print('Node initiated: audio_pub')
         
     def getAudioFrames(self):
 

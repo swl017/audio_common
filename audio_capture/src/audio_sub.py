@@ -36,7 +36,8 @@ class WavAudioSub():
         self.info_sub      = rospy.Subscriber("audio/all/info", AudioInfo, self.infoSubCallback)
         self.channel_pub   = [rospy.Publisher("audio/ch"+str(i), AudioDataStringArray, queue_size=1) for i in range(self.channels)]
         
-        print('Node initiated')
+        print('Node initiated: audio_sub')
+        print('file directory: ' + self.file_path)
 
     def infoSubCallback(self, msg):
         # Sync to audio_pub node's setting
