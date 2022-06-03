@@ -10,7 +10,7 @@ For the AGC 2022 competition, please `git clone` and build the `feature/wave` br
 
 
 # The concept and usage
-이 패키지의 컨셉은 젯슨(`audio_pub.py`)에서 8 채널 오디오 데이터를 `/audio/all`/ 토픽으로 publish하고, 서버(`audio_sub.py`)에서 subscribe 받은 메세지를 각 채널로 분리하여 사용하는 것입니다. 따라서 아래와 같이 실행합니다.
+이 패키지의 컨셉은 젯슨(`audio_pub.py`)에서 8 채널 오디오 데이터를 `/audio/all`/ 토픽으로 publish하고, 서버(`audio_sub.py`)에서 subscribe 받은 메세지를 각 채널로 분리하여 사용하는 것입니다. 따라서 아래와 같이 실행합니다. \
 The concept is to publish 8 channel audio data to the topic `/audio/all` from Jetson(`audio_pub.py`), subscribe to the topic and split the audio channels on the server(`audio_sub.py`). Thus, the nodes are run as the following:
 
 - Jetson side
