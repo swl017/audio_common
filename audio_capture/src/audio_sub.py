@@ -47,7 +47,6 @@ class WavAudioSub():
         self.channels      = msg.channels
         self.fs            = msg.sample_rate
         self.file_name     = 'wave_'+ str(self.channels) + '_' + str(self.sample_format) + '_' + str(self.fs) + '_'
-        pass
         
     def audioSubCallback(self, msg):
         if self.oldest_msg_time is None:
@@ -66,14 +65,17 @@ class WavAudioSub():
             # time = msg.header.stamp # timestamp at the end of the sound
             time = self.oldest_msg_time # timestamp at the start of the sound
             self.save_time = str(time.secs * 10**9 + time.nsecs)
-            #try:
-            self.saveFile(self.ext_frames)
-            for i in range(self.channels):
-                ch_data = self.splitChannels(self.ext_frames, i)
-                self.savePerChannel(ch_data, i)
-                self.pubPerChannel(ch_data, time, i)
-            #except:
-            #    pass
+            try:
+                self.saveFile(self.ext_frames)
+                for i in range(self.channels):
+                    ch_data = self.splitChannels(self.ext_frames, i)
+                    self.savePerChannel(ch_data, i)
+                    self.pubPerChannel(ch_data, time, i)
+            except:
+               print("[Exception] Failed to save files. \
+                      Please make sure you are working with correct audio parameters, \
+                      or subscribing to audio/all/info topic")
+               pass
             self.ext_frames  = []
             self.frame_count = 0
             self.oldest_msg_time = None
