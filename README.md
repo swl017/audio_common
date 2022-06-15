@@ -9,7 +9,7 @@ This repository is a fork from the [ros_drivers/audio_common](https://github.com
 For the AGC 2022 competition, please `git clone` and build the `feature/wave` branch using `catkin_make`
 
 ```bash
-cd catkin_ws/src
+cd ~/catkin_ws/src
 git clone https://github.com/swl017/audio_common -b feature/wave
 cd ..
 rosdep install --from-paths src/ --ignore-src -r -y
@@ -42,8 +42,8 @@ The concept is to publish 8 channel audio data to the topic `/audio/all` from Je
 ```bash
 rosrun audio_capture audio_pub.py
 ```
-- This publishes audio data including all 8 channels in __`audio/all`__ topic. 
-- The parameters are also published in __`audio/all/info`__ topic and are used in the subscriber node described below.
+- This publishes __audio data__ including all 8 channels in __`audio/all`__ topic. 
+- The __parameters__ are published in __`audio/all/info`__ topic and are used in the subscriber node described below.
 - For the moment, __only `pyhon2` is supported__ and __not `python3` due to differences in writing data into bytes__. Please push a PR if you are willing to share your solution.
 
 ## 2. Server side
