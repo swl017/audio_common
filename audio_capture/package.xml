@@ -27,4 +27,6 @@
    <run_depend>gstreamer1.0-plugins-base</run_depend>
    <run_depend>gstreamer1.0-plugins-good</run_depend>
    <run_depend>gstreamer1.0-plugins-ugly</run_depend>
+   <run_depend>python-pyaudio</run_depend>
+   <run_depend>python3-pyaudio</run_depend>
 </package>

@@ -4,7 +4,7 @@
 @brief  Publish audio messages in AudioDataStringArray.
 @date   2022-06-01
 @author Seungwook Lee, USRG@KAIST
-@todo   Investigate device option like arecord -l
+@todo   Investigate device option using arecord -l
 @todo   Investigate how to specify the bitrate
 '''
 
