@@ -18,6 +18,7 @@ from audio_common_msgs.msg import AudioInfo
 
 class WavAudioSub():
     def __init__(self):
+        # Default values. Subject to be changed by audio/all/info topic
         self.sample_format = pyaudio.paInt16
         self.channels      = 8
         self.fs            = 44100              # Record at 44100 samples per second
@@ -26,9 +27,10 @@ class WavAudioSub():
         self.oldest_msg_time = None
         self.ext_frames    = []
         self.frame_count   = 0
-
+        self.file_name     = 'wave_'+ str(self.channels) + '_' + str(self.sample_format) + '_' + str(self.fs) + '_'
+        
         #### Parameters ####
-        self.file_length_sec = 2.0              # Pick one of the two: time length vs frame count
+        self.file_length_sec = 2.0              # Pick one of the two: time length(default) vs frame count
         self.frame_count_thres = 10             # 10 frames corresponding to 1 second
         self.file_path     = os.getcwd() + '/'
 
@@ -43,7 +45,7 @@ class WavAudioSub():
         # Sync to audio_pub node's setting
         self.sample_format = int(msg.sample_format)
         self.channels      = msg.channels
-        self.sample_rate   = msg.sample_rate
+        self.fs            = msg.sample_rate
         self.file_name     = 'wave_'+ str(self.channels) + '_' + str(self.sample_format) + '_' + str(self.fs) + '_'
         pass
         
@@ -64,14 +66,14 @@ class WavAudioSub():
             # time = msg.header.stamp # timestamp at the end of the sound
             time = self.oldest_msg_time # timestamp at the start of the sound
             self.save_time = str(time.secs * 10**9 + time.nsecs)
-            try:
-                self.saveFile(self.ext_frames)
-                for i in range(self.channels):
-                    ch_data = self.splitChannels(self.ext_frames, i)
-                    self.savePerChannel(ch_data, i)
-                    self.pubPerChannel(ch_data, time, i)
-            except:
-                pass
+            #try:
+            self.saveFile(self.ext_frames)
+            for i in range(self.channels):
+                ch_data = self.splitChannels(self.ext_frames, i)
+                self.savePerChannel(ch_data, i)
+                self.pubPerChannel(ch_data, time, i)
+            #except:
+            #    pass
             self.ext_frames  = []
             self.frame_count = 0
             self.oldest_msg_time = None
