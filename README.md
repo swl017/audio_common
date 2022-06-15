@@ -16,10 +16,22 @@ rosdep install --from-paths src/ --ignore-src -r -y
 catkin_make
 ```
 
-# Mic Check
+# Mic check
 If `arecord -l` shows the `SpkUAC20` on `card 2`, the mic array is set and good to go.
+
+(Example)
 ```bash
-arecord -l
+$ arecord -l
+**** List of CAPTURE Hardware Devices ****
+card 1: Generic [HD-Audio Generic], device 0: ALCS1200A Analog [ALCS1200A Analog]
+  Subdevices: 1/1
+  Subdevice #0: subdevice #0
+card 1: Generic [HD-Audio Generic], device 2: ALCS1200A Alt Analog [ALCS1200A Alt Analog]
+  Subdevices: 1/1
+  Subdevice #0: subdevice #0
+card 2: SpkUAC20 [miniDSP VocalFusion Spk (UAC2.0], device 0: USB Audio [USB Audio]
+  Subdevices: 0/1
+  Subdevice #0: subdevice #0
 ```
 
 # The concept and usage
@@ -30,16 +42,17 @@ The concept is to publish 8 channel audio data to the topic `/audio/all` from Je
 ```bash
 rosrun audio_capture audio_pub.py
 ```
-- This publishes audio data including all 8 channels in `audio/all` topic. 
-- The parameters are also published in `audio/all/info` topic and are used in the subscriber node described below.
+- This publishes audio data including all 8 channels in __`audio/all`__ topic. 
+- The parameters are also published in __`audio/all/info`__ topic and are used in the subscriber node described below.
+- For the moment, __only `pyhon2` is supported__ and __not `python3` due to differences in writing data into bytes__. Please push a PR if you are willing to share your solution.
 
 ## 2. Server side
 ```bash
 rosrun audio_capture audio_sub.py
 ```
-- `audio_sub.py` subscribes to `audio/all` topic for the actual data and `audio/all/info` topic for referencing the format of the data.
+- `audio_sub.py` subscribes to __`audio/all` topic for the actual data__ and __`audio/all/info` topic for referencing the format of the data__.
 - The subscriber node seperates the 8 channel data into individual channels. While the individual channels _are_ published in `audio/ch{CHANNEL}` topics, however, you may want to work with the seperated channels directly in the subscriber node to achieve maximum performance. (To get over with network delay, bandwidth, sync issues, etc.)
-- You must select an appropriate length for each audio file in `file_length_sec` variable.
+- You must select an appropriate length for each audio file in __`file_length_sec`__ variable.
 - The subscriber node saves the original 8 channel audio into `wave_{NUMBER_CHANNELS}_{SAMPLE_FORMAT}_{SAMPLE_RATE}_{ROS_TIME_STAMP}.wav` and the individual channels in `wave_{NUMBER_CHANNELS}_{SAMPLE_FORMAT}_{SAMPLE_RATE}_{ROS_TIME_STAMP}_{CHANNEL}.wav`. The audio parameters and the names come from `audio/all/info` topic if it is ever subscribed, else default values are used. File saving is tested valid on `python2`. __Saving to `.wav` is not supported on `python3`__ for now. Please push a PR if you are willing to share your solution.
 
 # Another possibility but not tested
