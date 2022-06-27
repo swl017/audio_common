@@ -22,3 +22,8 @@ install(TARGETS audio_capture
 
 install(DIRECTORY launch
    DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION})
+   
+install(PROGRAMS
+   src/audio_pub.py src/audio_sub.py
+   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+)
