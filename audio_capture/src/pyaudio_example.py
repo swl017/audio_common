@@ -9,7 +9,7 @@ from audio_common_msgs.msg import AudioData
 chunk = 1024  # Record in chunks of 1024 samples
 sample_format = pyaudio.paInt16  # 16 bits per sample
 channels = 8
-fs = 44100  # Record at 44100 samples per second
+fs = 16000  # Record at 44100 samples per second
 seconds = 3
 filename = "output.wav"
 
@@ -21,7 +21,8 @@ stream = p.open(format=sample_format,
                 channels=channels,
                 rate=fs,
                 frames_per_buffer=chunk,
-                input=True)
+                input=True,
+                input_device_index=24)
 
 frames = []  # Initialize array to store frames
 
@@ -29,18 +30,18 @@ frames = []  # Initialize array to store frames
 print_once = True
 for i in range(0, int(fs / chunk * seconds)):
     data = stream.read(chunk)
-    if print_once:
-        print(data)
-        print(data[0])
-        print(type(data))
-        print(type(data[0]))
-        print_once = False
+    # if print_once:
+    #     print(data)
+    #     print(data[0])
+    #     print(type(data))
+    #     print(type(data[0]))
+    #     print_once = False
     frames.append(data)
-print(type(frames))
-print(type(frames[0]))
-fdfd = AudioData()
-fdfd.data = frames
-print(type(fdfd.data))
+# print(type(frames))
+# print(type(frames[0]))
+# fdfd = AudioData()
+# fdfd.data = frames
+# print(type(fdfd.data))
 
 # Stop and close the stream 
 stream.stop_stream()

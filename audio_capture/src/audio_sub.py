@@ -30,7 +30,7 @@ class WavAudioSub():
         self.file_name     = 'wave_'+ str(self.channels) + '_' + str(self.sample_format) + '_' + str(self.fs) + '_'
         
         #### Parameters ####
-        self.file_length_sec = 2.0              # Pick one of the two: time length(default) vs frame count
+        self.file_length_sec = 30.0              # Pick one of the two: time length(default) vs frame count
         self.frame_count_thres = 10             # 10 frames corresponding to 1 second
         self.file_path     = os.getcwd() + '/'
 
@@ -69,7 +69,7 @@ class WavAudioSub():
                 self.saveFile(self.ext_frames)
                 for i in range(self.channels):
                     ch_data = self.splitChannels(self.ext_frames, i)
-                    self.savePerChannel(ch_data, i)
+                    # self.savePerChannel(ch_data, i)
                     self.pubPerChannel(ch_data, time, i)
             except:
                print("[Exception] Failed to save files. \
