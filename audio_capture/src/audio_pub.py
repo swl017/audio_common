@@ -17,10 +17,10 @@ from audio_common_msgs.msg import AudioInfo
 
 class WavAudioPub:
     def __init__(self, pub_hz):
-        self.chunk          = 32  # Record in chunks of 1024 samples
+        self.chunk          = 1024  # Record in chunks of 1024 samples
         self.sample_format  = pyaudio.paInt16  # 16, 32 supported
         self.channels       = 8
-        self.fs             = 16000  # Record at 44100 samples per second
+        self.fs             = 44100  # Record at 44100 samples per second
         self.seconds        = 1.0 / pub_hz
         MIC_NAME = "miniDSP VocalFusion Spk (UAC2.0: USB Audio (hw:2,0)"
         self.p = pyaudio.PyAudio()  # Create an interface to PortAudio
@@ -43,8 +43,9 @@ class WavAudioPub:
                                 channels=self.channels,
                                 rate=self.fs,
                                 frames_per_buffer=self.chunk,
-                                input=True,
-                                input_device_index=mic_index)
+                                input=True)
+                                # input=True,
+                                # input_device_index=mic_index)
 
         self.frame_pub = rospy.Publisher("audio/all", AudioDataStringArray, queue_size=1)
         self.info_pub  = rospy.Publisher("audio/all/info", AudioInfo, queue_size=1)
@@ -87,7 +88,7 @@ class WavAudioPub:
 def main():
     rospy.init_node('audio_pub')
 
-    pub_hz = 1
+    pub_hz = 10
     rate   = rospy.Rate(pub_hz) # 10hz
 
     node = WavAudioPub(pub_hz)
