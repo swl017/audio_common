@@ -69,7 +69,7 @@ class WavAudioSub():
                 self.saveFile(self.ext_frames)
                 for i in range(self.channels):
                     ch_data = self.splitChannels(self.ext_frames, i)
-                    # self.savePerChannel(ch_data, i)
+                    self.savePerChannel(ch_data, i)
                     self.pubPerChannel(ch_data, time, i)
             except:
                print("[Exception] Failed to save files. \
