@@ -61,3 +61,13 @@ rosrun audio_capture audio_sub.py
 
 # Further Reference
 The purpose of the provided code is to demonstrate an example to handle multi-channel audio data in ROS environment. You can to modify the provided code to fit your own needs.
+
+# Make Micarray Default
+Run below to check make of device
+```
+pactl list short sources
+```
+Add the following command in `startup application`
+```
+pactl set-default-source alsa_input.usb-miniDSP_miniDSP_VocalFusion_Spk__UAC2.0_-00.multichannel-input
+```
